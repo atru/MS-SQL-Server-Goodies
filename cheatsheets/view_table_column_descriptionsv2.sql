@@ -1,11 +1,11 @@
-use AventureWorks2008
+use AdventureWorks2008
 
-select 
-    st.name [Table],
-    sc.name [Column],
+select
+	st.name [Table],
+	sc.name [Column],
     sep.value [Description]
-  from sys.tables st
-     join sys.columns sc on (st.object_id = sc.object_id)
-     left join sys.extended_properties sep (on st.object_id = sep.major_id
+	from sys.tables st
+		join sys.columns sc on (st.object_id = sc.object_id)
+		left join sys.extended_properties sep on (st.object_id = sep.major_id
                                        and sc.column_id = sep.minor_id
                                        and sep.name = 'MS_Description')
