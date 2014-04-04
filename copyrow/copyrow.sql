@@ -15,7 +15,7 @@ SELECT * FROM AdventureWorks2008.SalesLT.Product WHERE ProductID=999
 EXEC SYSDB.dbo._CopyRow @tableFullName='AdventureWorks2008.SalesLT.Product',@keyID=999,@todo=@todo,@keyIDout=@newKeyID OUT
 SELECT * FROM AdventureWorks2008.SalesLT.Product WHERE ProductID=@newKeyID
 @endcode*/
-ALTER PROCEDURE [dbo].[_CopyRow]
+CREATE PROCEDURE [dbo].[_CopyRow]
 	@tableFullName varchar(1000)		/**@param Full table name (AdventureWorks2008.SalesLT.Product)*/
 	,@keyID			bigint				/**@param Source row ID (identity value)*/
 	,@keyIDout		bigint=null out		/**@param Returned value of inserted identity*/
@@ -65,7 +65,6 @@ set nocount on;
 
 		CREATE TABLE #new_values(value varchar(4000), col varchar(100), colval varchar(4000))
 		INSERT INTO #new_values(value) SELECT Match FROM SYSDB.dbo.RegExSplit(@todo,';',0)
-		/** ALTERNATIVE: INSERT INTO #new_values(value) FROM SYSDB.dbo.RegExSplit(@todo,';',0) */
 		IF @@TRANCOUNT=0 RETURN
 		/*********** split pairs 'a=1' into two columns: name and value **********************/
 		UPDATE #new_values SET col=left(value,CHARINDEX('=',value)-1), colval=STUFF(value,1,CHARINDEX('=',value),'')
