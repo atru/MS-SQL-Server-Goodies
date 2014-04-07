@@ -78,8 +78,8 @@ set nocount on;
 		update #t_all set colval=CAST(@keyIDout AS varchar(max)) where value=@key_column
 
 		/****** assemble the query, replacing column names with new values if necessary ******/
-		SELECT @query = 'INSERT INTO '+@tableFullName+'('+APSYS.dbo.list(t.value,',')+')'
-			+' SELECT '+APSYS.dbo.list(case when t.colval is null then t.value else t.colval+' '+t.value end,',')
+		SELECT @query = 'INSERT INTO '+@tableFullName+'('+SYSDB.dbo.list(t.value,',')+')'
+			+' SELECT '+SYSDB.dbo.list(case when t.colval is null then t.value else t.colval+' '+t.value end,',')
 			+' FROM '+ @tableFullName + ' WHERE ' + @key_column + '=' + CAST(@keyID as varchar(10))
 		FROM #t_all as t 
 
