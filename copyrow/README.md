@@ -3,7 +3,15 @@ copyrow
 
 These scripts allow row copying functionality in MS SQL.
 
-For example, `EXEC SYSDB.dbo._CopyRow @tableFullName='AdventureWorks2008.SalesLT.Product',@keyID=999,@todo=@todo,@keyIDout=@newKeyID OUT`.
+For example
+```sql
+EXEC SYSDB.dbo._CopyRow 
+    @tableFullName='AdventureWorks2008.SalesLT.Product'
+    ,@keyID=999
+    ,@todo="col1=new value;col2=newer value"
+    ,@keyIDout=@newKeyID OUT
+```
+would copy a row with key `@keyID=999`, change the values according to `@todo="col1=new value;col2=newer value` and return the inserted key as an out parameter `@keyIDout=@newKeyID OUT`.
 
 Installation
 ============
